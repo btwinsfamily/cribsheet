@@ -7,7 +7,7 @@
   const escapeRegex=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
   const words=entries.map(e=>e[0]).sort((a,b)=>b.length-a.length).map(escapeRegex);
   const pattern=new RegExp('(^|[^\\p{L}\\p{N}])('+words.join('|')+')(?![\\p{L}\\p{N}])','giu');
-  const root=document.getElementById('chapter');
+  const root=document.querySelector('main');
   if(!root)return;
   const pop=document.createElement('div');
   pop.id='term-popover';pop.className='term-popover';pop.setAttribute('role','dialog');pop.setAttribute('aria-label','Biology term definition');pop.hidden=true;
@@ -38,7 +38,7 @@
   const skip=new Set(['SCRIPT','STYLE','A','BUTTON','INPUT','TEXTAREA','SUMMARY','CODE','PRE','FIGCAPTION']);
   function annotate(container){
     const walker=document.createTreeWalker(container,NodeFilter.SHOW_TEXT,{acceptNode(node){
-      if(!node.nodeValue.trim())return NodeFilter.FILTER_REJECT;
+      if(!node.nodeValue.trim())return NodeFilter.FILTER_REJECT;const section=node.parentElement?.closest('section');if(!section||!['chapter','age'].includes(section.id))return NodeFilter.FILTER_REJECT;
       for(let p=node.parentElement;p&&p!==container.parentElement;p=p.parentElement){
         if(skip.has(p.tagName)||p.classList.contains('biology-term')||p.closest('#term-popover'))return NodeFilter.FILTER_REJECT;
       }
