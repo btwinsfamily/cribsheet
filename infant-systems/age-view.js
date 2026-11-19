@@ -19,7 +19,7 @@ function showAge(index){
   const h=document.createElement('h3');h.textContent=sys;
   const p=document.createElement('p');p.textContent=detail;
   const button=document.createElement('button');button.type='button';button.className='chip';button.textContent='Follow '+sys+' across ages →';
-  button.onclick=()=>{window.activeSystem=sys;window.age=index;window.matrix();window.stage();window.tab('chapter')};
+  button.onclick=()=>{window.openSystemAtAge(sys,index)};
   card.append(h,p,button);wrap.append(card)
  });
 }
